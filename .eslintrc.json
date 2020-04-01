@@ -6,6 +6,7 @@
     },
     "extends": [
         "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
         "standard"
     ],
     "globals": {
@@ -25,7 +26,14 @@
         "@typescript-eslint"
     ],
     "rules": {
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off",
       "no-unused-vars": "off",
-      "react/react-in-jsx-scope": "off"
+      "@typescript-eslint/indent": ["error", 2],
+      "@typescript-eslint/member-delimiter-style": ["error", {
+        "multiline": {
+          "delimiter": "none"
+        }
+      }]
     }
 }
