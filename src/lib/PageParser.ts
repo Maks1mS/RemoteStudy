@@ -32,7 +32,7 @@ const parsePage = (page: Page): PageData => {
         break
       default: {
         const matches = token.match(/([A-Z-\d]+)\((?:(\d?\d)\.(\d?\d))\)/)
-        if (Object.values(Subjects).includes(matches[1])) {
+        if (Object.keys(Subjects).includes(matches[1])) {
           pageData.subject = matches[1]
           console.log(parseInt(matches[3]), parseInt(matches[2]))
           const date = new Date(new Date().getFullYear(), parseInt(matches[3]) - 1, parseInt(matches[2]))
@@ -81,7 +81,7 @@ class PageParser {
           const month = parseInt(matches[3])
           const day = parseInt(matches[2])
 
-          if (Object.values(Subjects).includes(matches[1])) {
+          if (Object.keys(Subjects).includes(matches[1])) {
             data.subject = subject
 
             const date = new Date(new Date().getFullYear(), month - 1, day)
