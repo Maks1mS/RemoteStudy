@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
+    "ts:check": "tsc --noEmit",
     "lint": "eslint ./src/**",
     "lint:fix": "eslint --fix --color ./src/**",
     "storybook": "start-storybook -p 6006",
@@ -19,6 +20,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
+      "yarn ts:check",
       "yarn lint:fix"
     ]
   },
