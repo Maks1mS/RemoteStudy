@@ -5,9 +5,24 @@ import { ApolloServer, gql } from 'apollo-server-micro'
 import Telegraph from 'telegra.ph'
 import { Page } from 'telegra.ph/typings/telegraph'
 
-const client = new Telegraph(process.env.TOKEN)
+import timetable from '../../lib/timetable'
+import folders from '../../lib/subjects'
+
+import PageParser from '../../lib/PageParser'
+import CloudDrive, { createUrl } from '../../lib/CloudDrive'
 
 const typeDefs = gql`
+
+  type Lesson {
+    name: String
+  }
+
+  type Subject {
+    key: String
+    name: String
+    url: String
+    tasks: [Lesson]
+  }
 
   type News {
     title: String
@@ -15,57 +30,65 @@ const typeDefs = gql`
   }
 
   type Query {
-    sayHello: String
+    timetable: [Subject]
     news: [News]
+    subjects: [Subject]
   }
 `
 
 type PageData = {
-  title: string;
-  isNews: boolean;
-  isHot: boolean;
-}
-
-const parsePage = (page: Page): PageData => {
-  const pageData = {
-    title: page.title,
-    content: page.content,
-    isNews: false,
-    isHot: false
-  }
-  const title = page.title.replace(/\[([A-Z]*)\]/g, (match, token) => {
-    console.log(token)
-    switch (token) {
-      case 'NEWS':
-        pageData.isNews = true
-        break
-      case 'HOT':
-        pageData.isHot = true
-    }
-    return ''
-  })
-  pageData.title = title.trim()
-  return pageData
+  title: string
+  isNews: boolean
+  isHot: boolean
+  subject: string
+  date: string
 }
 
 const resolvers = {
   Query: {
-    sayHello (): string {
-      return 'Hello World!'
+    timetable () {
+      const date = new Date()
+      date.setDate(new Date().getDate())
+      return timetable(date)
     },
-    async news (): Promise<unknown> {
-      const { pages } = await client.getPageList()
-      return pages.map(page => {
-        const pageData = parsePage(page)
-        if (pageData.isNews) {
-          return pageData
+    async news (parent, _args, { dataSources }: { dataSources: DataSources}): Promise<unknown> {
+      const pages = await dataSources.pages.get()
+      return pages.filter(page => page.isNews)
+    },
+    async subjects (_parent, _args, { dataSources }) {
+      return Object.keys(folders).map(async key => {
+        const subject = folders[key]
+        return {
+          key,
+          name: subject[0],
+          url: createUrl(subject[1], subject[2])
         }
       })
+    }
+  },
+  Subject: {
+    async tasks (parent, _args, { dataSources }): Promise<unknown> {
+      const data = await dataSources.drive.getFiles(parent.key)
+      return data
     }
   }
 }
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers, tracing: true })
+type DataSources = {
+  pages: PageParser
+}
+
+const apolloServer = new ApolloServer({
+  typeDefs,
+  resolvers,
+  tracing: true,
+  dataSources: () => {
+    return {
+      pages: new PageParser(process.env.TOKEN) as unknown,
+      drive: new CloudDrive()
+    }
+  }
+})
 
 const cors = Cors({
   allowMethods: ['POST', 'OPTIONS']

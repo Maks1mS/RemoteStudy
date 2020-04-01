@@ -1,4 +1,4 @@
-const Button: React.FC = ({ children }): JSX.Element => (
+const Button: React.FC = ({ children }) => (
   <button>{children}</button>
 )
 
