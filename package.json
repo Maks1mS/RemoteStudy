@@ -7,21 +7,21 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "ts:check": "tsc --noEmit",
-    "lint": "eslint ./src/**",
-    "lint:fix": "eslint --fix --color ./src/**",
+    "test": "jest",
+    "lint": "eslint src --ext js,jsx,ts,tsx",
+    "lint:fix": "eslint --fix --color --ext js,jsx,ts,tsx",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "tsc --noEmit && lint-staged"
     }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "yarn ts:check",
-      "yarn lint:fix"
+      "yarn lint:fix",
+      "yarn test"
     ]
   },
   "dependencies": {
