@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders 1`] = `
+<div>
+  <div
+    class="css-1u4rf2v-Container e1dz631m0"
+  >
+    <h2>
+      Test
+    </h2>
+  </div>
+</div>
+`;
