@@ -1,4 +1,6 @@
+import { css } from '@emotion/core'
 import styled from '@emotion/styled'
+import Link from 'next/link'
 
 const Layout = styled.div`
   display: grid;
@@ -22,10 +24,25 @@ const Main = styled.main`
   grid-template-columns: 1fr; 
 `
 
+const NavLink = styled.a`
+  display: flex;
+  height: 100%;
+  align-items: center;
+`
+
 const MainLayout: React.FC = ({ children }) => {
   return <Layout>
     <Header>
-
+      <div css={css`
+        vertical-align: center;
+      `}>
+        <Link href="/">
+          <NavLink css={css`font-weight: bold; font-size: 30px;`}>Remote Study</NavLink>
+        </Link>
+      </div>
+      <Link href="/timetable">
+        <NavLink>Все предметы</NavLink>
+      </Link>
     </Header>
     <Main>
       {children}

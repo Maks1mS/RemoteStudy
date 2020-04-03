@@ -7,7 +7,22 @@ exports[`Renders 1`] = `
   >
     <header
       class="css-3kezaa-Header e16xpiph1"
-    />
+    >
+      <div
+        class="css-1xfx2u-MainLayout"
+      >
+        <a
+          class="css-uvbdfj-NavLink-MainLayout e16xpiph3"
+        >
+          Remote Study
+        </a>
+      </div>
+      <a
+        class="css-1ja0cqr-NavLink e16xpiph3"
+      >
+        Все предметы
+      </a>
+    </header>
     <main
       class="css-lqeazj-Main e16xpiph2"
     >
