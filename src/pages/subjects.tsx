@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-key */
-import { NextPage, NextPageContext } from 'next'
+import { NextPage } from 'next'
 import { css } from '@emotion/core'
-import styled from '@emotion/styled'
 import withApollo from '../lib/withApollo'
 import { useQuery } from '@apollo/react-hooks'
-import { gql, ApolloClient, InMemoryCache } from 'apollo-boost'
+import { gql } from 'apollo-boost'
 import { useTable, useSortBy } from 'react-table'
 import Container from '../components/Container'
 import Link from 'next/link'
 import React from 'react'
+import MainLayout from '../layout/MainLayout'
 
 const QUERY = gql`
   {
@@ -21,43 +21,8 @@ const QUERY = gql`
     }
   }
 `
-const Layout = styled.div`
-  display: grid;
-  height: 100%;
-  grid-template-areas: "header" "main";
-  grid-template-rows:  50px 1fr;
-`
-const Header = styled.header`
-  grid-area: "header";
-  height: 50px;
-  background: #212529;
-  color: #fff;
-  display: flex;
-  flex-direction: row;
-`
 
-const NavLink = styled.a`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  `
-
-const Main = styled.main`
-  grid-area: "main";
-  display: grid;
-  grid-template-columns: 1fr; 
-`
-
-const Row = styled.tr`
-  border: solid 1px;
-`
-
-const Col = styled.td`
-  border: solid 1px;
-  font-size: 25px;
-`
-
-function Table ({ columns, data }) {
+const Table = ({ columns, data }) => {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -106,7 +71,6 @@ function Table ({ columns, data }) {
 const Index: NextPage = () => {
   const { loading, data } = useQuery(QUERY)
 
-  const subjectsList = ''
   let subjects = []
   if (loading || !data) {
   } else {
@@ -133,22 +97,8 @@ const Index: NextPage = () => {
     }
   ], [])
 
-  return <>
-    <Layout>
-      <Header>
-        <div css={css`
-          vertical-align: center;
-        `}>
-          <Link href="/">
-            <NavLink css={css`font-weight: bold; font-size: 30px;`}>Remote Study</NavLink>
-          </Link>
-        </div>
-        <Link href="/timetable">
-          <NavLink>Все предметы</NavLink>
-        </Link>
-      </Header>
-      <Main>
-        <Container css={css`
+  return <MainLayout>
+    <Container css={css`
           min-height: 100px;
           margin: 10px;
           table {
@@ -170,17 +120,15 @@ const Index: NextPage = () => {
             }
           }
         `}>
-          <div>
-            <h2 css={css`
+      <div>
+        <h2 css={css`
               font-style: bold;
               font-size: 50px;
             `}>Предметы</h2>
-          </div>
-          { tableData && <Table columns={columns} data={tableData} /> }
-        </Container>
-      </Main>
-    </Layout>
-  </>
+      </div>
+      { tableData && <Table columns={columns} data={tableData} /> }
+    </Container>
+  </MainLayout>
 }
 
 export default withApollo(Index)

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders 1`] = `
+<div>
+  <div
+    class="css-nrfu13-Block e7drqi50"
+  >
+    Test
+  </div>
+</div>
+`;
