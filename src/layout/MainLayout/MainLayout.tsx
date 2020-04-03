@@ -40,7 +40,7 @@ const MainLayout: React.FC = ({ children }) => {
           <NavLink css={css`font-weight: bold; font-size: 30px;`}>Remote Study</NavLink>
         </Link>
       </div>
-      <Link href="/timetable">
+      <Link href="/subjects">
         <NavLink>Все предметы</NavLink>
       </Link>
     </Header>
