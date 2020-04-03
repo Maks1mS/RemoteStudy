@@ -20,7 +20,6 @@ class CloudDrive extends RESTDataSource {
 
   async getFiles (subjectKey: string) {
     const subject = folders[subjectKey]
-    console.log(subject)
     const provider: Service = subject[1]
 
     if (provider === null) return []
@@ -36,6 +35,7 @@ class CloudDrive extends RESTDataSource {
       data = await this.get('folder', {
         weblink: subject[2]
       })
+      console.log(data.body.list)
       return data.body.list
     }
   }
