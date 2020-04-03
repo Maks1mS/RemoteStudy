@@ -1,0 +1,6 @@
+{
+  "env": {
+    "TOKEN": "@telegraph-token",
+    "GOOGLE_APIKEY": "@google-apikey"
+  }
+}
