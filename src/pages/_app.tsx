@@ -1,6 +1,8 @@
+import Head from 'next/head'
 import { Global, css } from '@emotion/core'
+import 'emoji-mart/css/emoji-mart.css'
 
-export default function MyApp ({ Component, pageProps }) {
+export default function MyApp ({ Component, pageProps }): JSX.Element {
   return <>
     <Global styles={css`
         @font-face {
@@ -23,6 +25,9 @@ export default function MyApp ({ Component, pageProps }) {
           margin: 0;
         }
     `}/>
+    <Head>
+      <title>Remote Study</title>
+    </Head>
     <Component {...pageProps} />
   </>
 }

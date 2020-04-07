@@ -1,16 +1,12 @@
 import Cors from 'micro-cors'
 
-import { ApolloServer, gql } from 'apollo-server-micro'
-
-import Telegraph from 'telegra.ph'
-import { Page } from 'telegra.ph/typings/telegraph'
+import { ApolloServer, gql, ApolloError } from 'apollo-server-micro'
 
 import timetable from '../../lib/timetable'
 import folders from '../../lib/subjects'
 
 import PageParser from '../../lib/PageParser'
 import CloudDrive, { createUrl } from '../../lib/CloudDrive'
-
 const typeDefs = gql`
 
   type Lesson {
@@ -33,29 +29,52 @@ const typeDefs = gql`
     timetable: [Subject]
     news: [News]
     subjects: [Subject]
+    subject(key: String): Subject
+    isDayOff: Boolean
   }
 `
 
-type PageData = {
-  title: string
-  isNews: boolean
-  isHot: boolean
-  subject: string
-  date: string
+type Lesson = {
+  name?: string
+}
+
+type Subject = {
+  key?: string
+  name?: string
+  url?: string
+  tasks?: [Lesson]
+}
+
+const isDayOff = (): boolean => {
+  const date = new Date()
+  const day = date.getDay() === 0 ? 6 : date.getDay() - 1
+  return (day > 4)
 }
 
 const resolvers = {
   Query: {
-    timetable () {
-      const date = new Date()
-      date.setDate(new Date().getDate())
-      return timetable(date)
+    isDayOff,
+    timetable (parent) {
+      if (!isDayOff()) {
+        const date = new Date()
+        return timetable(date)
+      }
+      return []
     },
-    async news (parent, _args, { dataSources }: { dataSources: DataSources}): Promise<unknown> {
+    async news (_parent, _args, { dataSources }: { dataSources: DataSources}): Promise<unknown> {
       const pages = await dataSources.pages.get()
       return pages.filter(page => page.isNews)
     },
-    async subjects (_parent, _args, { dataSources }) {
+    async subject (_parent, { key }): Promise<Subject> {
+      const sub = folders[key]
+      if (!sub) throw new ApolloError(`${key} does not exist!`)
+      return {
+        key,
+        name: sub[0],
+        url: createUrl(sub[1], sub[2])
+      }
+    },
+    async subjects (_parent, _args) {
       return Object.keys(folders).map(async key => {
         const subject = folders[key]
         return {
