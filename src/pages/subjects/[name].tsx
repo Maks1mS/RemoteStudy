@@ -9,7 +9,6 @@ import Container from '../../components/Container'
 import withApollo from '../../lib/withApollo'
 import Error from 'next/error'
 import Button from '../../components/Button'
-import Link from 'next/link'
 import PulseLoader from 'react-spinners/PulseLoader'
 
 const QUERY = gql`
@@ -18,6 +17,9 @@ const QUERY = gql`
       key
       name
       url
+      tasks {
+        name
+      }
     }
   }
 `
@@ -50,6 +52,9 @@ const Index: NextPage = () => {
         font-size: 50px;
       `}>{subject.name}</h2>
       <Button onClick={() => { window.open(subject.url, '_blank') } }>ОТКРЫТЬ</Button>
+      <ul>
+        {subject.tasks.map((v, i) => <li key={i}>{v.name}</li>)}
+      </ul>
     </Container>
   </MainLayout>
 }
