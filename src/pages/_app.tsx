@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import Head from 'next/head'
 import Router from 'next/router'
-import withGA from 'next-ga'
 import { Global, css } from '@emotion/core'
 import 'emoji-mart/css/emoji-mart.css'
 import App from 'next/app'
@@ -58,6 +57,5 @@ class MyApp extends App {
       <Component {...pageProps} />
     </>
   }
-}
 
-export default withGA(process.env.GOOGLE_ANALYTICS, Router)(MyApp)
+export default MyApp
