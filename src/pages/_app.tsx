@@ -1,8 +1,10 @@
 import Head from 'next/head'
+import Router from 'next/router'
+import withGA from 'next-ga'
 import { Global, css } from '@emotion/core'
 import 'emoji-mart/css/emoji-mart.css'
 
-export default function MyApp ({ Component, pageProps }): JSX.Element {
+function MyApp ({ Component, pageProps }): JSX.Element {
   return <>
     <Global styles={css`
         @font-face {
@@ -31,3 +33,5 @@ export default function MyApp ({ Component, pageProps }): JSX.Element {
     <Component {...pageProps} />
   </>
 }
+
+export default withGA(process.env.GOOGLE_ANALYTICS, Router)(MyApp)
