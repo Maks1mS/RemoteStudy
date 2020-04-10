@@ -10,24 +10,39 @@ const Layout = styled.div`
 `
 
 const Header = styled.header`
-  grid-area: "header";
+  grid-area: header;
   height: 50px;
   background: #212529;
   color: #fff;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 `
 
 const Main = styled.main`
-  grid-area: "main";
+  grid-area: main;
   display: grid;
   grid-template-columns: 1fr; 
+`
+
+const LogoLink = styled.a`
+  display: flex;
+  height: 100%;
+  padding: 0 10px;
+  align-items: center;
+  font-weight: bold; 
+  font-size: 30px;
 `
 
 const NavLink = styled.a`
   display: flex;
   height: 100%;
+  padding: 0 10px;
   align-items: center;
+  :hover {
+    color: #212529;
+    background: #fff;
+  }
 `
 
 const MainLayout: React.FC = ({ children }) => {
@@ -37,12 +52,17 @@ const MainLayout: React.FC = ({ children }) => {
         vertical-align: center;
       `}>
         <Link href="/">
-          <NavLink css={css`font-weight: bold; font-size: 30px;`}>Remote Study</NavLink>
+          <LogoLink>Remote Study</LogoLink>
         </Link>
       </div>
-      <Link href="/subjects">
-        <NavLink>Все предметы</NavLink>
-      </Link>
+      <div css={css`
+        vertical-align: center;
+        padding: 0 100px;
+      `}>
+        <Link href="/subjects">
+          <NavLink>Все предметы</NavLink>
+        </Link>
+      </div>
     </Header>
     <Main>
       {children}

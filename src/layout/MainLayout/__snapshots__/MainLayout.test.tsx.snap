@@ -6,25 +6,29 @@ exports[`Renders 1`] = `
     class="css-ihy8jo-Layout e16xpiph0"
   >
     <header
-      class="css-3kezaa-Header e16xpiph1"
+      class="css-u19x77-Header e16xpiph1"
     >
       <div
         class="css-1xfx2u-MainLayout"
       >
         <a
-          class="css-uvbdfj-NavLink-MainLayout e16xpiph3"
+          class="css-lgww11-LogoLink e16xpiph3"
         >
           Remote Study
         </a>
       </div>
-      <a
-        class="css-1ja0cqr-NavLink e16xpiph3"
+      <div
+        class="css-1w2mho7-MainLayout"
       >
-        Все предметы
-      </a>
+        <a
+          class="css-10fkiix-NavLink e16xpiph4"
+        >
+          Все предметы
+        </a>
+      </div>
     </header>
     <main
-      class="css-lqeazj-Main e16xpiph2"
+      class="css-zamk5m-Main e16xpiph2"
     >
       Test
     </main>
