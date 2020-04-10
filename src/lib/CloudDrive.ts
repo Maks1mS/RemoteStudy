@@ -1,4 +1,4 @@
-import Subjects, { folders } from './subjects'
+import { folders } from './subjects'
 import { RESTDataSource } from 'apollo-datasource-rest'
 
 type Service = 'google' | 'mailru'
@@ -13,12 +13,12 @@ const publicUrl = {
   mailru: 'https://cloud.mail.ru/public/'
 }
 
-export const createUrl = (provider: Service, id: string) => publicUrl[provider] + id
+export const createUrl = (provider: Service, id: string): string => publicUrl[provider] + id
 
 class CloudDrive extends RESTDataSource {
   provider: Service
 
-  async getFiles (subjectKey: string) {
+  async getFiles (subjectKey: string): Promise<unknown[]> {
     const subject = folders[subjectKey]
     const provider: Service = subject[1]
 
@@ -28,6 +28,7 @@ class CloudDrive extends RESTDataSource {
     if (provider === 'google') {
       data = await this.get('files', {
         q: `"${subject[2]}" in parents`,
+        orderBy: 'createdTime desc',
         key: process.env.GOOGLE_APIKEY
       })
       return data.files

@@ -9,7 +9,7 @@ type Table = Day[]
 const table: Table = [
   [
     ['history'],
-    ['informatics'],
+    ['informatics1'],
     ['literature'],
     ['pe', 'mathMore']
   ],
@@ -27,7 +27,7 @@ const table: Table = [
   ],
   [
     ['chemistry', 'history', 'chemistry', 'literature'],
-    ['english'],
+    ['english1'],
     ['algebra'],
     ['bmt']
   ],
@@ -39,17 +39,17 @@ const table: Table = [
   ]
 ]
 
-const timetable = (date: Date) => {
+const timetable = (date: Date): unknown[] => {
   const day = date.getDay() === 0 ? 6 : date.getDay() - 1
 
   const currentWeek = Math.floor(date.getDate() / 7) % 4
-
+  console.log(currentWeek)
   const currentTable = []
   table[day].forEach((possible: string[]) => {
     const name = possible[currentWeek % possible.length]
     const data = folders[name]
     if (name) {
-      currentTable.push({ key: name, name: data[0], lessons: [] })
+      currentTable.push({ key: name, name: data[0].replace(/ \(\d-я группа\)/, ''), lessons: [] })
     }
   })
   return currentTable
