@@ -1,12 +1,36 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import Head from 'next/head'
 import Router from 'next/router'
-import withGA from 'next-ga'
 import { Global, css } from '@emotion/core'
 import 'emoji-mart/css/emoji-mart.css'
+import App from 'next/app'
 
-function MyApp ({ Component, pageProps }): JSX.Element {
-  return <>
-    <Global styles={css`
+class MyApp extends App {
+  componentDidMount () {
+    let { gtag, dataLayer } = window
+    console.log('HERE!')
+    dataLayer = dataLayer || []
+    gtag = function (...args): void {
+      console.log(args)
+      dataLayer.push(args)
+    }
+    gtag('js', new Date())
+    gtag('config', process.env.GOOGLE_ANALYTICS)
+    Router.events.on('routeChangeComplete', url => {
+      setTimeout(() => {
+        console.log('test!')
+        gtag('config', process.env.GOOGLE_ANALYTICS, {
+          page_location: url,
+          page_title: document.title
+        })
+      }, 0)
+    })
+  }
+
+  render () {
+    const { Component, pageProps } = this.props
+    return <>
+      <Global styles={css`
         @font-face {
           font-family: 'Roboto';
           src: url('/fonts/Roboto-Regular.ttf');
@@ -27,11 +51,12 @@ function MyApp ({ Component, pageProps }): JSX.Element {
           margin: 0;
         }
     `}/>
-    <Head>
-      <title>Remote Study</title>
-    </Head>
-    <Component {...pageProps} />
-  </>
+      <Head>
+        <title>Remote Study</title>
+      </Head>
+      <Component {...pageProps} />
+    </>
+  }
 }
 
-export default withGA(process.env.GOOGLE_ANALYTICS, Router)(MyApp)
+export default MyApp
