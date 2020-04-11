@@ -57,5 +57,6 @@ class MyApp extends App {
       <Component {...pageProps} />
     </>
   }
+}
 
 export default MyApp
