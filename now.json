@@ -1,8 +1,12 @@
 {
   "env": {
     "TOKEN": "@telegraph-token",
-    "GOOGLE_APIKEY": "@google-apikey",
-    "GOOGLE_ANALYTICS": "@google-analytics"
+    "GOOGLE_APIKEY": "@google-apikey"
+  },
+  "build": {
+    "env": {
+      "GOOGLE_ANALYTICS": "@google-analytics"
+    }
   },
   "regions": ["bru"]
 }
