@@ -1,32 +1,13 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import Head from 'next/head'
 import Router from 'next/router'
 import { Global, css } from '@emotion/core'
-import 'emoji-mart/css/emoji-mart.css'
 import App from 'next/app'
+import * as gtag from '../lib/gtag'
+import 'emoji-mart/css/emoji-mart.css'
+
+Router.events.on('routeChangeComplete', url => gtag.pageview(url))
 
 class MyApp extends App {
-  componentDidMount () {
-    let { gtag, dataLayer } = window
-    console.log('HERE!')
-    dataLayer = dataLayer || []
-    gtag = function (...args): void {
-      console.log(args)
-      dataLayer.push(args)
-    }
-    gtag('js', new Date())
-    gtag('config', process.env.GOOGLE_ANALYTICS)
-    Router.events.on('routeChangeComplete', url => {
-      setTimeout(() => {
-        console.log('test!')
-        gtag('config', process.env.GOOGLE_ANALYTICS, {
-          page_location: url,
-          page_title: document.title
-        })
-      }, 0)
-    })
-  }
-
   render () {
     const { Component, pageProps } = this.props
     return <>
