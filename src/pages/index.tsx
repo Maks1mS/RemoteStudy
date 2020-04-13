@@ -63,6 +63,7 @@ const Index: NextPage = () => {
         `}>Мое расписание</h2>
       </div>
       {timeTable}
+      Да, да, да, я знаю что неделя не та. Потом исправлю.
     </Container>
   </MainLayout>
 }

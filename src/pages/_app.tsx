@@ -5,7 +5,9 @@ import App from 'next/app'
 import * as gtag from '../lib/gtag'
 import 'emoji-mart/css/emoji-mart.css'
 
-Router.events.on('routeChangeComplete', url => gtag.pageview(url))
+if (gtag.shouldTrack) {
+  Router.events.on('routeChangeComplete', url => gtag.pageview(url))
+}
 
 class MyApp extends App {
   render () {
