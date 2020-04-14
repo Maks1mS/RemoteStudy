@@ -57,7 +57,7 @@ const MainLayout: React.FC = ({ children }) => {
       </div>
       <div css={css`
         vertical-align: center;
-        padding: 0 100px;
+        padding: 0 25px;
       `}>
         <Link href="/subjects">
           <NavLink>Все предметы</NavLink>
