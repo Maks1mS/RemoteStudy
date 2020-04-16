@@ -1,3 +1,18 @@
+const sortMath = (a, b) => {
+  const datePattern = /(\d{2}).(\d{2}).(\d{4})/
+  const [x, y] = [a.name, b.name].map(el => {
+    const [, day, month, year] = datePattern.exec(el)
+    return new Date(`${year}-${month}-${day}`)
+  })
+  if (x > y) {
+    return -1
+  }
+  if (x < y) {
+    return 1
+  }
+  return 0
+}
+
 export const folders = {
   physics: ['Физика', 'google', '1Lz8NQXIhZSGNycx_7hrL_SPBZW9wn1QW'],
   pe: ['Физ-ра', 'google', '1VE-uiK6_lkxKOEkvZQPifCsn44t81zPm'],
@@ -15,9 +30,9 @@ export const folders = {
   russianMore: ['Русский язык (факультатив)', 'google', '10GLzL81s8Q0C24UrK8DeshPgAnYH9fc7'],
   astronomy: ['Астрономия', 'google', '1SrQet4Bt3-RBFRWpDZkn7B31fUyCCzm1'],
 
-  algebra: ['Алгебра', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Алгебра'],
-  geometry: ['Геометрия', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Геометрия'],
-  mathMore: ['Математика (факультатив)', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Факультатив'],
+  algebra: ['Алгебра', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Алгебра', sortMath],
+  geometry: ['Геометрия', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Геометрия', sortMath],
+  mathMore: ['Математика (факультатив)', 'mailru', '4CoK/4Zc9Cs2hH/403 группа/Факультатив', sortMath],
   geography: ['География', 'mailru', '5PNB/6DAzJzDVZ/403/'],
   bmt: ['НВП', 'mailru', '3amT/36MXYenJU/НВП/'],
 
