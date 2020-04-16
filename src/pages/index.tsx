@@ -1,13 +1,13 @@
 import { NextPage } from 'next'
 import { css } from '@emotion/core'
-import withApollo from '../lib/withApollo'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import { Emoji } from 'emoji-mart'
+import PulseLoader from 'react-spinners/PulseLoader'
+import withApollo from '../lib/withApollo'
 import News from '../components/News'
 import Container from '../components/Container'
 import MainLayout from '../layout/MainLayout'
-import { Emoji } from 'emoji-mart'
-import PulseLoader from 'react-spinners/PulseLoader'
 
 const QUERY = gql`
   {

@@ -36,8 +36,12 @@ class CloudDrive extends RESTDataSource {
       data = await this.get('folder', {
         weblink: subject[2]
       })
-      console.log(data.body.list)
-      return data.body.list
+      let { list } = data.body
+      console.log(list)
+      if (subject[3]) {
+        list = list.sort(subject[3])
+      }
+      return list
     }
   }
 }
