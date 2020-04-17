@@ -19,6 +19,7 @@ const QUERY = gql`
     subjects {
       key
       name
+      url
       tasks {
         name
       }
