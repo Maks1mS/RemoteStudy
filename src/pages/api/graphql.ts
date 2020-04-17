@@ -75,14 +75,14 @@ const resolvers = {
       }
     },
     async subjects (_parent, _args) {
-      return Object.keys(folders).map(async key => {
+      return Object.keys(folders).map(key => {
         const subject = folders[key]
         return {
           key,
           name: subject[0],
           url: createUrl(subject[1], subject[2])
         }
-      })
+      }).sort((a, b) => a.name.localeCompare(b.name))
     }
   },
   Subject: {
