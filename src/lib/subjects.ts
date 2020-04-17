@@ -36,7 +36,7 @@ export const folders = {
   geography: ['География', 'mailru', '5PNB/6DAzJzDVZ/403/'],
   bmt: ['НВП', 'mailru', '3amT/36MXYenJU/НВП/'],
 
-  ukrainian: ['Укр.яз', null, null]
+  ukrainian: ['Укр.яз', 'google', '1fGPKTSjPYNBbqpznfEKldYz2m_YQ21J5']
 }
 
 export default folders
