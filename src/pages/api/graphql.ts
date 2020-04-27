@@ -106,7 +106,10 @@ const apolloServer = new ApolloServer({
       pages: new PageParser(process.env.TOKEN) as unknown,
       drive: new CloudDrive()
     }
-  }
+  },
+  context: (integrationContext) => ({
+    ip: integrationContext.req.headers['x-real-ip'] || ''
+  })
 })
 
 const cors = Cors({
