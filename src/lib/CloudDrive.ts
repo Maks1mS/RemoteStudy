@@ -29,7 +29,8 @@ class CloudDrive extends RESTDataSource {
       data = await this.get('files', {
         q: `"${subject[2]}" in parents`,
         orderBy: 'createdTime desc',
-        key: process.env.GOOGLE_APIKEY
+        key: process.env.GOOGLE_APIKEY,
+        userIp: this.context.ip
       })
       return data.files
     } else {
